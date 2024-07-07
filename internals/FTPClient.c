@@ -7,18 +7,18 @@
 
 int main(void) {
     FILE *fp;
-    int socket, s;
+    int socketfd, s;
     struct sockaddr_in server_addr;
     char rcvg[101], name[50], fname[50];
 
-    // Create socket:
-    socket = socket(AF_INET, SOCK_STREAM, 0);
+    // Create socketfd:
+    socketfd = socket(AF_INET, SOCK_STREAM, 0);
     
-    if (socket < 0) {
-        printf("Error while creating a socket\n");
+    if (socketfd < 0) {
+        printf("Error while creating a socketfd\n");
         return -1;
     }
-    printf("Socket created successfully\n");
+    printf("socketfd created successfully\n");
     
     // Set port and IP:
     server_addr.sin_family = AF_INET;
@@ -26,7 +26,7 @@ int main(void) {
     server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
     
     // Send connection request to server:
-    if (connect(socket, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+    if (connect(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
         printf("Unable to connect\n");
         return -1;
     }
@@ -44,9 +44,9 @@ int main(void) {
         return -1;
     }
 
-    send(socket, name, strlen(name), 0);
+    send(socketfd, name, strlen(name), 0);
     while (1) {
-        s = recv(socket, rcvg, 100, 0);
+        s = recv(socketfd, rcvg, 100, 0);
         if (s <= 0) {
             printf("Connection closed by server.\n");
             break;
@@ -67,6 +67,6 @@ int main(void) {
         }
     }
 
-    close(socket);
+    close(socketfd);
     return 0;
 }
