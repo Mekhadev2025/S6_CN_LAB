@@ -48,7 +48,7 @@ int main()
 
     if (bfilled == 0)
     {
-        printf("\nNo packets to transmitte");
+        printf("\nNo packets to transmitted");
     }
     else if (bfilled >= outrate)
     {
