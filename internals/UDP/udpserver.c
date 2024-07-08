@@ -187,7 +187,7 @@ close() function closes the socket.
 
 */
 
-* /
+
     void main()
 {
     int server;
@@ -222,8 +222,8 @@ close() function closes the socket.
     }
     printf("Msg from client: %s\n", cliMsg);
 
-    strcpy(servMsg, cliMsg); // Corrected typo from 'stropy' to 'strcpy'
 
+    strcpy(servMsg, "Heyy this is server");
     if (sendto(server, servMsg, strlen(servMsg), 0, (struct sockaddr *)&client_addr, client_struct_length) < 0)
     {
         printf("Can't send\n");

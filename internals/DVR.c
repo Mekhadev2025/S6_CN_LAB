@@ -3,14 +3,11 @@ struct router {
     unsigned cost[20];
     unsigned from[20];
 } routingTable[10];
-
 int main() {
     int costmat[20][20];
     int routers, i, j, k;
-
     printf("\nEnter the number of routers: ");
     scanf("%d", &routers);
-
     printf("\nEnter the cost matrix:\n");
     for (i = 0; i < routers; i++) {
         for (j = 0; j < routers; j++) {
@@ -20,10 +17,8 @@ int main() {
             routingTable[i].from[j] = j;
         }
     }
-
     // Initialize a large value for representing infinity
     const int INFINITY = 999;
-
     int otherShorterPathExists;
     do {
         otherShorterPathExists = 0;
@@ -39,7 +34,6 @@ int main() {
             }
         }
     } while (otherShorterPathExists != 0);
-
     // Display routing table
     for (i = 0; i < routers; i++) {
         printf("\n\nFor Router %d\n", i + 1);
