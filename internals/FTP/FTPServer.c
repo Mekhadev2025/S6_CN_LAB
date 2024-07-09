@@ -8,13 +8,13 @@
 int main(void) {
     
     FILE *fp;
-    int socketfd, client_sock, client_size, n;
+    int server, client_sock, client_size, n;
     struct sockaddr_in server_addr, client_addr;
     char rcv[100], fileread[100];
 
-    // Create socketfd
-    socketfd = socket(AF_INET, SOCK_STREAM, 0);
-    if (socketfd < 0) {
+    // Create server
+    server = socket(AF_INET, SOCK_STREAM, 0);
+    if (server < 0) {
         printf("Error while creating socket\n");
         return -1;
     }
@@ -26,14 +26,14 @@ int main(void) {
     server_addr.sin_addr.s_addr = INADDR_ANY;
 
     // Bind to the set port and IP
-    if (bind(socketfd, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
+    if (bind(server, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0) {
         printf("Couldn't bind to the port\n");
         return -1;
     }
     printf("Done with binding\n");
 
     // Listen for clients
-    if (listen(socketfd, 1) < 0) {
+    if (listen(server, 1) < 0) {
         printf("Error while listening\n");
         return -1;
     }
@@ -41,7 +41,7 @@ int main(void) {
 
     // Accept an incoming connection
     client_size = sizeof(client_addr);
-    client_sock = accept(socketfd, (struct sockaddr *)&client_addr, &client_size);
+    client_sock = accept(server, (struct sockaddr *)&client_addr, &client_size);
     if (client_sock < 0) {
         printf("\nCan't accept\n");
         return -1;
@@ -66,6 +66,6 @@ int main(void) {
         send(client_sock, "completed", 9, 0);
     }
     close(client_sock);
-    close(socketfd);
+    close(server);
     return 0;
 }
